@@ -1,0 +1,40 @@
+server:
+  port: 10010
+
+spring:
+  application:
+    name: demo-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10001/eureka
+    registry-fetch-interval-seconds: 5 #从eureka服务器获取注册表信息的频率，默认30s
+  instance:
+    prefer-ip-address: true #使用ip地址获取主机名
+    ip-address: 127.0.0.1
+#    lease-expiration-duration-in-seconds: 90 #服务失效时间，默认90s
+#    lease-renewal-interval-in-seconds: 30 #服务续约任务的调用时间间隔，默认30s
+zuul:
+#  prefix: /api #添加路由前缀
+#  retryable: true #是否支持重试
+  routes:  #配置路由
+    demo-user: /user/** # 将用户微服务映射到/user/**
+#    demo-user:
+#      path: /user/**
+#      serviceId: demo-user
+#      strip-prefix: false
+
+  add-host-header: true
+  sensitive-headers:  #设置zuul的过滤头为空（所有的头信息全部展示）
+  ignored-services: #忽略服务列表
+    #- upload-service # 忽略upload-service服务
+ribbon:
+  ConnectTimeout: 250 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 10000 # 熔断超时时长：10000ms

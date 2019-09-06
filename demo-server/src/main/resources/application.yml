@@ -1,18 +1,22 @@
 server:
   port: 10001
+
+spring:
+  application:
+    name: demo-server
+
 eureka:
   instance:
     hostname: 127.0.0.1 #提供服务的域名，本地可以使用localhost或者配置hosts测试
-    prefer-ip-address: true
+    prefer-ip-address: true #优先使用ip地址作为主机名的标识
   client:
     register-with-eureka: false #关闭向注册中心注册自己
     fetch-registry: true #关闭发现注册服务，注册中心仅用于维护节点
     service-url:
       defaultZone: http://127.0.0.1:10001/eureka
-  server:
-    enable-self-preservation: false #本地调试，关闭自我保护机制
+#  server: #开发阶段一般不用
+#    enable-self-preservation: false #本地调试，关闭自我保护机制
+#    eviction-interval-timer-in-ms: 5000 # 每隔5秒进行一次服务列表清理
 
 
-spring:
-  application:
-    name: demo-server
+
